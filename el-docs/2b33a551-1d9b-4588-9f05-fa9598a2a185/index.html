@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
+    <title>DMED</title>
+    <link rel="icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/el-docs/styles.css">
 </head>
 
@@ -274,14 +276,14 @@
                                 style="box-sizing: border-box; user-select: none; padding-inline-end: 8pt; font-size: 26pt; font-weight: 600">1603
                             </span>
                         </td>
-                        <td rowspan="3"
-                            style="box-sizing: border-box; user-select: none; width: 98pt; vertical-align: middle">
+                        <td rowspan="3" style="box-sizing: border-box; user-select: none; width: 98pt; vertical-align: middle">
                             <div id="qr-code" style="box-sizing: border-box; user-select: none; height: 98pt">
+                                <img src="/qr-logo.svg" width="130" height="130"></svg>                            
                             </div>
                         </td>
                     </tr>
                     <tr style="box-sizing: border-box; user-select: none">
-                        <td colspan="2"
+                        <td colspan="2" 
                             style="box-sizing: border-box; user-select: none; padding-top: 3pt; padding-bottom: 3pt; padding-right: 16pt">
                             <p
                                 style="box-sizing: border-box; user-select: none; margin: 0; vertical-align: middle; font-size: 12px; line-height: 1.25">
@@ -313,6 +315,81 @@
             </table>
         </div>
     </div>
+
+    <!-- Print to PDF Button -->
+    <button id="printBtn" onclick="printDocument()" style="
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 47px;
+        height: 47px;
+        border-radius: 6px;
+        background: #ffffff;
+        border: 1px solid #d9d9d9;
+        color: rgba(0, 0, 0, 0.88);
+        /* box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4); */
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    " >
+        <span style="color: rgba(0, 0, 0, 0.88);"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"></path><rect x="6" y="14" width="12" height="8" rx="1"></rect></svg></span>
+    </button>
+
+    <script>
+        function printDocument() {
+            // Store the original body content
+            const originalContent = document.body.innerHTML;
+            const printContent = document.querySelector('.doc-content').innerHTML;
+            
+            // Replace body content with just the doc-content
+            document.body.innerHTML = '<div class="doc-content">' + printContent + '</div>';
+            
+            // Trigger print dialog
+            window.print();
+            
+            // Restore original content after print
+            document.body.innerHTML = originalContent;
+            
+            // Re-attach event listener
+            document.getElementById('printBtn').onclick = printDocument;
+        }
+
+        // Add print media query styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            @media print {
+                #printBtn { 
+                    display: none !important;
+                }
+                
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                .doc-content {
+                    width: 100%;
+                    max-width: 100%;
+                    padding: 10mm;
+                }
+                
+                /* Remove browser default headers and footers */
+                @page {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 
 </html>

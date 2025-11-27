@@ -5,7 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DMED Documents</title>
+    <link rel="icon" href="/assets/favicon.ico">
+    <title>DMED</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -368,21 +369,21 @@
                 flag: '../assets/lang/uz.svg',
                 heading: "Hujjatni ko'rish uchun PIN - kodni kiriting",
                 button: 'Ochish',
-                error: 'Hujjat topilmadi'
+                error: 'Incorrect PIN code'
             },
             ru: {
                 label: 'Русский',
                 flag: '../assets/lang/ru.svg',
                 heading: 'Введите PIN-код, чтобы просмотреть документ',
                 button: 'Открыть',
-                error: 'Документ не найден'
+                error: 'Incorrect PIN code'
             },
             en: {
                 label: 'English',
                 flag: '../assets/lang/en.svg',
                 heading: 'Enter the PIN code to view the document',
                 button: 'Open',
-                error: 'Document not found'
+                error: 'Incorrect PIN code'
             }
         };
 
@@ -412,6 +413,10 @@
             if (pin.length === 4) {
                 if (pin === "1603") {
                     setTimeout(() => {
+                        inputs.forEach(input => {
+                            input.value = '';
+                        });
+                        clearError();
                         window.location.href = "/el-docs/2b33a551-1d9b-4588-9f05-fa9598a2a185/index.html";
                     }, 150);
                 } else {
@@ -473,7 +478,7 @@
         });
 
         inputs[0].focus();
-        setLanguage('uz');
+        setLanguage('ru');
     </script>
 </body>
 
